@@ -1,0 +1,33 @@
+/* app.component.css */
+.form-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .form-control {
+    border-radius: 0.375rem;
+  }
+  
+  .btn-custom {
+    background-color: #28a745;
+    color: #fff;
+    border-radius: 0.375rem;
+  }
+  
+  .btn-custom:hover {
+    background-color: #218838;
+  }
+  
+  .text-danger {
+    font-size: 0.875rem;
+  }
+  

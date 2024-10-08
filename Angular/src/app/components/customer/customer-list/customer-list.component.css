@@ -1,0 +1,18 @@
+/* customer.component.css */
+.list-group-item {
+    border: 1px solid #e0e0e0;
+    border-radius: 0.25rem;
+    transition: background-color 0.3s ease;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+h5 {
+    color: #007bff; /* Bootstrap primary color */
+}
+
+.container {
+    max-width: 600px; /* Limit the width of the container */
+}

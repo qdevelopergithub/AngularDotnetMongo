@@ -1,0 +1,51 @@
+ <!-- app.component.html -->
+<div class="container">
+    <div class="form-container">
+      <h2 class="form-header">Add Customer</h2>
+      <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label for="customerEmail" class="form-label">Email Address</label>
+          <input
+            type="email"
+            id="customerEmail"
+            formControlName="email"
+            class="form-control"
+            placeholder="Enter Email"
+          />
+          <div *ngIf="customerForm.controls['email'].invalid && customerForm.controls['email'].touched" class="text-danger">
+            Enter a valid email address.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="customerName" class="form-label">Name</label>
+          <input
+            type="text"
+            id="customerName"
+            formControlName="name"
+            class="form-control"
+            placeholder="Enter Name"
+          />
+          <div *ngIf="customerForm.controls['name'].invalid && customerForm.controls['name'].touched" class="text-danger">
+            Name is required.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
+          <input
+            type="text"
+            id="address"
+            formControlName="address"
+            class="form-control"
+            placeholder="Enter Address"
+          />
+          <div *ngIf="customerForm.controls['address'].invalid && customerForm.controls['address'].touched" class="text-danger">
+            Address is required.
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-custom" [disabled]="customerForm.invalid">Add Customer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

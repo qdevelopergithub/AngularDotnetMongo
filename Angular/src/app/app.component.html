@@ -1,0 +1,12 @@
+<app-spinner *ngIf="showLoading | async"></app-spinner>
+
+
+<router-outlet>
+    <div class="row">
+        <div class="col-md-12" >
+            <div class="alert alert-danger" *ngIf="errorMessage | async as error">
+                {{ error }}
+            </div>
+        </div>
+    </div>
+</router-outlet>
