@@ -40,33 +40,9 @@ namespace CrudWithMongoDB.Middleware
                         context.Request.Body.Position = 0;  
                     }
                 }
-                else if (context.Request.Method.Equals("GET", StringComparison.OrdinalIgnoreCase) || context.Request.Method.Equals("DELETE", StringComparison.OrdinalIgnoreCase))
-                {
-                    parameters = context.Request.QueryString.ToString();
-                }
-
-                string logParameters = MaskPasswordInLog(parameters);
 
                 try
                 {
-                    var decryptedParams = new Dictionary<string, StringValues>();
-
-                    foreach (var param in context.Request.Query)
-                    {
-                        var decryptedValue = EncryptionHelper.EncryptionHelper.Decrypt(param.Value, _secretKey);
-
-                        if (string.IsNullOrEmpty(decryptedValue) || decryptedValue.ToLower() == "null")
-                        {
-                            decryptedParams.Add(param.Key, StringValues.Empty);
-                        }
-                        else
-                        {
-                            decryptedParams.Add(param.Key, decryptedValue);
-                        }
-                    }
-                   
-                    var decryptedQueryString = new QueryCollection(decryptedParams);
-                    context.Request.Query = decryptedQueryString;
 
                     if (context.Request.Method.Equals("POST", StringComparison.OrdinalIgnoreCase) && context.Request.ContentLength > 0)
                     {
@@ -76,8 +52,7 @@ namespace CrudWithMongoDB.Middleware
                         if (!string.IsNullOrEmpty(bodyAsText))
                         {
                             try
-                            {
-                                var enytpt = EncryptionHelper.EncryptionHelper.Encrypt(bodyAsText, _secretKey);
+                            { 
 
                                 var decryptedBody = EncryptionHelper.EncryptionHelper.Decrypt(bodyAsText, _secretKey);
                                 var buffer = Encoding.UTF8.GetBytes(decryptedBody);
@@ -96,7 +71,7 @@ namespace CrudWithMongoDB.Middleware
 
                     newBodyStream.Seek(0, SeekOrigin.Begin);
                     var plainTextResponse = await new StreamReader(newBodyStream).ReadToEndAsync();
-                    var encryptedResponse = EncryptionHelper.EncryptionHelper.Decrypt(plainTextResponse, _secretKey);
+                    var encryptedResponse = EncryptionHelper.EncryptionHelper.Encrypt(plainTextResponse, _secretKey);
                     var encryptedData = Encoding.UTF8.GetBytes(encryptedResponse);
 
                     context.Response.Body = originalBodyStream;  

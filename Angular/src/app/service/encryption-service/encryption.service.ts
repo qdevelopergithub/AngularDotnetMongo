@@ -12,20 +12,26 @@ export class EncryptionService {
   }
 
   encrypt(text: string): string {
-    let result = '';
-    for (let i = 0; i < text.length; i++) {
-      result += String.fromCharCode(text.charCodeAt(i) ^ this.secretKey.charCodeAt(i % this.secretKey.length));
-    }
-    return btoa(result); // Convert to base64
+    const key = CryptoJS.enc.Base64.parse(this.secretKey)
+    const iv = CryptoJS.lib.WordArray.create(new Uint8Array(16))
+    const encrypted = CryptoJS.AES.encrypt(text, key, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    }) 
+    return encrypted.toString() 
   }
 
   // Decrypts the string by reversing the XOR operation
   decrypt(cipherText: string): string {
-    const decodedText = atob(cipherText); // Decode base64
-    let result = '';
-    for (let i = 0; i < decodedText.length; i++) {
-      result += String.fromCharCode(decodedText.charCodeAt(i) ^ this.secretKey.charCodeAt(i % this.secretKey.length));
-    }
-    return result;
+    // Parse the secret key from Base64
+    const key = CryptoJS.enc.Base64.parse(this.secretKey)
+    const iv = CryptoJS.lib.WordArray.create(new Uint8Array(16))
+    const decrypted = CryptoJS.AES.decrypt(cipherText, key, {
+      iv: iv,
+      mode: CryptoJS.mode.CBC,
+      padding: CryptoJS.pad.Pkcs7,
+    })
+    return decrypted.toString(CryptoJS.enc.Utf8)
   }
 }
