@@ -27,6 +27,14 @@ namespace CrudWithMongoDB.Service
 
         public async Task CreateCustomerAsync(Customer customer)
         {
+            var filter = Builders<Customer>.Filter.Eq(c => c.Email, customer.Email);
+            var existingCustomer = await _customerCollection.Find(filter).FirstOrDefaultAsync();
+
+            if (existingCustomer != null)
+            {
+                throw new Exception("A customer with the same email already exists.");
+            }
+
             await _customerCollection.InsertOneAsync(customer);
         }
 
