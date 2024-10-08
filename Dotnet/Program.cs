@@ -1,7 +1,7 @@
 using CrudWithMongoDB.DataAccess;
 using CrudWithMongoDB.EncryptionHelper;
-using CrudWithMongoDB.Middleware;
-using MongoDB.Driver;
+using CrudWithMongoDB.Service.Interface;
+using CrudWithMongoDB.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +14,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<MongoDbServices>();
 builder.Services.AddTransient<EncryptionHelper>();
 builder.Services.AddScoped<EncryptionHelper>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAllOrigins", builder =>

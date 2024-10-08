@@ -23,7 +23,6 @@ namespace CrudWithMongoDB.EncryptionHelper
             }
             catch (Exception ex)
             {
-                // Log the exception to gather more context
                 Console.WriteLine($"Error during encryption: {ex.Message}");
                 throw;
             }
@@ -47,7 +46,6 @@ namespace CrudWithMongoDB.EncryptionHelper
             }
             catch (Exception ex)
             {
-                // Log the exception to gather more context
                 Console.WriteLine($"Error during decryption: {ex.Message}");
                 throw;
             }
