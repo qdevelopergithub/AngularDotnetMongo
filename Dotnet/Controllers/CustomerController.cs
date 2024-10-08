@@ -30,12 +30,18 @@ namespace CrudWithMongoDB.Controllers
             var customer = await _customerService.GetCustomerByIdAsync(id);
             return customer == null ? NotFound() : Ok(customer);
         }
-
         [HttpPost]
         public async Task<ActionResult> CreateCustomer(Customer customer)
         {
-            await _customerService.CreateCustomerAsync(customer);
-            return CreatedAtAction(nameof(GetById), new { id = customer.Id }, customer);
+            try
+            {
+                await _customerService.CreateCustomerAsync(customer);
+                return CreatedAtAction(nameof(GetById), new { id = customer.Id }, customer);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         [HttpPut]
